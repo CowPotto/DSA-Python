@@ -25,14 +25,58 @@ def delete_node(head, pos):
     prev.next = curr.next
     return head
 
+def add_node_at_beginning(head, val):
+    curr = head
+    new_node = SinglyNode(val)
+    new_node.next = head
+    head = new_node
+    return head
 
+def add_node_at_end(head, val):
+    curr = head
+    new_node = SinglyNode(val)
+    while curr.next:
+        curr = curr.next
+
+    curr.next = new_node
+
+    return head
+
+def list_length(head):
+    curr = head
+    count = 0
+    while curr:
+        count += 1
+        curr = curr.next
+    return count
+
+def remove_dup(head):
+    if not head:
+        return None
+
+    curr = head
+    prev = None
+    seen = set()
+    while curr:#must revise
+        if curr.val in seen:
+            if prev:
+                prev.next = curr.next
+            else:
+                pass
+        else:
+            seen.add(curr.val)
+            prev = curr
+        curr = curr.next
+    return head
 
 if __name__ == "__main__":
 
     head = SinglyNode(1)
-    head.next = SinglyNode(2)
-    head.next.next = SinglyNode(3)
-    head = delete_node(head, 1)
+    head = add_node_at_end(head, 2)
+    head = add_node_at_end(head, 3)
+    head = add_node_at_end(head, 5)
+    head = add_node_at_end(head, 5)
 
+    head = remove_dup(head)
     display(head)
 
