@@ -1,82 +1,75 @@
-class SinglyNode:
-    def __init__(self, val, next = None):
-        self.val = val
-        self.next = next
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 
-    def __str__(self):
-        return str(self.val)
+class LinkedList:
+    def __init__(self, head = None):
+        self.head = head
 
-def display(head):
-    curr = head
-    elements = []
-    while curr:
-        elements.append(str(curr.val))
-        curr = curr.next
-    print(' -> '.join(elements))
+    def append(self, data):
+        #create new node using Node(data)
+        new_node = Node(data)
 
-def delete_node(head, pos):
-    curr = head
-    prev = None
-    if pos == 0:
-        return head.next
-    for i in range(0, pos):
-        prev = curr
-        curr = curr.next
-    prev.next = curr.next
-    return head
+        #if there is no node yet, the new node is the head
+        if self.head is None:
+            self.head = new_node
+            return
 
-def add_node_at_beginning(head, val):
-    curr = head
-    new_node = SinglyNode(val)
-    new_node.next = head
-    head = new_node
-    return head
+        curr = self.head
+        # traverse through the list until the curr.next = None, means that it is the last node
+        while curr.next:
+            curr = curr.next
+        curr.next = new_node
 
-def add_node_at_end(head, val):
-    curr = head
-    new_node = SinglyNode(val)
-    while curr.next:
-        curr = curr.next
+    def prepend(self, data):
+        new_node = Node(data)
+        #the next pointer of new node point to head
+        new_node.next = self.head
+        #set the new node to current head
+        self.head = new_node
 
-    curr.next = new_node
+    def display(self):
+        curr = self.head
+        if not curr:
+            print("The list is empty!")
+            return
 
-    return head
+        elements = []
+        while curr:
+            elements.append(str(curr.data))
+            curr = curr.next
+        print(' -> '.join(elements))
 
-def list_length(head):
-    curr = head
-    count = 0
-    while curr:
-        count += 1
-        curr = curr.next
-    return count
+    def add_node_after(self, prev_node_data, new_data):
+        if not self.head:
+            print("the list is fucking empty")
+            return
 
-def remove_dup(head):
-    if not head:
-        return None
+        found_prev_node = False
+        curr = self.head
+        while curr:
+            if curr.data == prev_node_data:
+                found_prev_node = True
+                break
+            curr = curr.next
 
-    curr = head
-    prev = None
-    seen = set()
-    while curr:#must revise
-        if curr.val in seen:
-            if prev:
-                prev.next = curr.next
-            else:
-                pass
-        else:
-            seen.add(curr.val)
-            prev = curr
-        curr = curr.next
-    return head
+        if not found_prev_node:
+            print(f"there is no {prev_node_data} in the fucking list mate")
+            return
+
+        new_node = Node(new_data)
+        new_node.next = curr.next
+        curr.next = new_node
+
+
+
 
 if __name__ == "__main__":
-
-    head = SinglyNode(1)
-    head = add_node_at_end(head, 2)
-    head = add_node_at_end(head, 3)
-    head = add_node_at_end(head, 5)
-    head = add_node_at_end(head, 5)
-
-    head = remove_dup(head)
-    display(head)
-
+    head = LinkedList()
+    head.append(5)
+    head.append(7)
+    head.append(9)
+    head.prepend(3)
+    head.add_node_after(9, 9)
+    head.display()
