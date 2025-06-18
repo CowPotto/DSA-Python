@@ -87,10 +87,7 @@ class LinkedList:
         prev.next = curr.next
         curr.next = None
 
-
-
-
-
+#=======================================================================================================================
 
 if __name__ == "__main__":
     head = LinkedList()
@@ -100,5 +97,6 @@ if __name__ == "__main__":
     head.prepend(3)
     head.add_node_after(9, 4)
     head.delete_node(4)
+    head.delete_node(5)
 
     head.display()
