@@ -62,6 +62,33 @@ class LinkedList:
         new_node.next = curr.next
         curr.next = new_node
 
+    def delete_node(self, specific_data):
+        #Case 1: The number is nowhere to find in the list
+        if not self.head:
+            print("This fuccking list is empty, again!")
+            return
+
+        #Case 2: the number is the head node
+        if self.head.data == specific_data:
+            self.head = self.head.next
+            return
+
+        #Case 3: normal traversal to delete specific node using prev and curr technique
+        prev = None
+        curr = self.head
+        while curr and curr.data != specific_data:
+            prev = curr
+            curr = curr.next
+
+        if curr is None:
+            print("you cannot delete a number that is not in the list you dumb fuck!")
+            return
+
+        prev.next = curr.next
+        curr.next = None
+
+
+
 
 
 
@@ -71,5 +98,7 @@ if __name__ == "__main__":
     head.append(7)
     head.append(9)
     head.prepend(3)
-    head.add_node_after(9, 9)
+    head.add_node_after(9, 4)
+    head.delete_node(4)
+
     head.display()
